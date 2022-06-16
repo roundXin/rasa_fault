@@ -8,26 +8,75 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - detail
+  - reason
+  - solution
+
+enities:
+  - detailStatus
+  - detailUnit
+  - detailPheonomenon
+  - schemeUnit
+  - schemeAnalyse
+  - reasonUnit
+  - reasonAnalyse
+
+slots:
+  detailStatus:
+    type: unfeaturized
+    auto_fill: false
+  detailUnit:
+    type: unfeaturized
+    auto_fill: false
+  detailPheonomenon:
+    type: unfeaturized
+    auto_fill: false
+  schemeUnit:
+    type: unfeaturized
+    auto_fill: false
+  schemeAnalyse:
+    type: unfeaturized
+    auto_fill: false
+  reasonUnit:
+    type: unfeaturized
+    auto_fill: false
+  reasonAnalyse:
+    type: unfeaturized
+    auto_fill: false
+  requested_slot:
+    type: unfeaturized
+
+forms:
+  fault_form
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+    - text: "Hey! How are you?"
+    - text: "你好，我是rasa机器人，请问您有什么需要帮助的吗?"
+    - text: "你好，请问有什么可以帮助您的吗?"
+    - text: "你好，我是 rasa, 一个利用知识图谱帮你解决车辆故障的机器人。"
 
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+    - text: "Here is something to cheer you up:"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
 
   utter_did_that_help:
-  - text: "Did that help you?"
+    - text: "Did that help you?"
 
   utter_happy:
-  - text: "Great, carry on!"
+    - text: "Great, carry on!"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Bye"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+    - text: "I am a bot, powered by Rasa."
+
+  utter_slots_values:
+    - text: "我将使用以下参数运行解决方案的搜索：:\n
+            - 车辆状态: {detailStatus}\n
+            - 故障部件: {detailUnit}\n
+            - 故障现象：{detailPhenomenon}"
 
 session_config:
   session_expiration_time: 60

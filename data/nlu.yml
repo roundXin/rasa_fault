@@ -16,6 +16,7 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
+    - 你好
 
 - intent: goodbye
   examples: |
@@ -29,6 +30,7 @@ nlu:
     - see you around
     - bye bye
     - see you later
+    - 再见
 
 - intent: affirm
   examples: |
@@ -38,6 +40,9 @@ nlu:
     - of course
     - that sounds good
     - correct
+    - 确定
+    - 同意
+    - 可以
 
 - intent: deny
   examples: |
@@ -48,6 +53,9 @@ nlu:
     - don't like that
     - no way
     - not really
+    - 拒绝
+    - 我不同意
+    - 退出
 
 - intent: mood_great
   examples: |
@@ -65,6 +73,9 @@ nlu:
     - so so perfect
     - so good
     - so perfect
+    - 很开心
+    - 心情很好
+    - 很愉快
 
 - intent: mood_unhappy
   examples: |
@@ -82,6 +93,8 @@ nlu:
     - extremly sad
     - so saad
     - so sad
+    - 我很难过
+    - 很不开心
 
 - intent: bot_challenge
   examples: |
@@ -89,3 +102,5 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+    - 你是机器人吗？
+    - 你是谁

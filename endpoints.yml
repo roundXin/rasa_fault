@@ -3,15 +3,15 @@
 # Server where the models are pulled from.
 # https://rasa.com/docs/rasa/model-storage#fetching-models-from-a-server
 
-#models:
-#  url: http://my-server.com/models/default_core@latest
-#  wait_time_between_pulls:  10   # [optional](default: 100)
+models:
+  url: http://my-server.com/models/default_core@latest
+  wait_time_between_pulls:  10   # [optional](default: 100)
 
 # Server which runs your custom actions.
 # https://rasa.com/docs/rasa/custom-actions
 
-#action_endpoint:
-#  url: "http://localhost:5055/webhook"
+action_endpoint:
+  url: "http://localhost:5055/webhook"
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
@@ -31,6 +31,16 @@
 #    db: <name of the db within your mongo instance, e.g. rasa>
 #    username: <username used for authentication>
 #    password: <password used for authentication>
+
+#tracker_store:
+#  type: SQL
+#  dialect: "postgresql"
+#  url: "postgres"
+#  db: "rasa"
+#  username:  "lsq" # username used for authentication
+#  password:  "lsq" # password used for authentication
+#  query: # optional dictionary to be added as a query string to the connection URL
+#  driver: my-driver
 
 # Event broker which all conversation events should be streamed to.
 # https://rasa.com/docs/rasa/event-brokers
