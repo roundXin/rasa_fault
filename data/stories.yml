@@ -4,7 +4,9 @@ stories:
 
   - story: firstStart
     steps:
-      - utter_greet
+      - intent: greet
+      - action: utter_greet
+
   - story: happy path
     steps:
       - intent: greet
@@ -31,11 +33,89 @@ stories:
       - action: utter_did_that_help
       - intent: deny
       - action: utter_goodbye
-
-  - story: getDetail
+  # TODO
+  #  - story: getDetail
+  #    steps:
+  #      - detail
+  #      - fault_form
+  #      - form{"name":"fault_form"}
+  #      - form{"name":null}
+  #      - utter_slots_values
+  #  - story: User interrupts the form and doesn't want to continue
+  #    steps:
+  #      - intent: request_fault_help
+  #      - action: fault_form
+  #      - active_loop: detailUnit
+  #      - slot_was_set:
+  #          - requested_slot: detailStatus
+  #      - intent: explain
+  #      - action: action_unit_detail
+  #      - - action: fault_form
+  #      - intent: stop
+  #      - action: action_deactivate_loop
+  #      - active_loop: null
+  #        -
+  #  - story: explain num_people slot
+  #    steps:
+  #    - intent: request_fault_help
+  #    - action: fault_form
+  #    - active_loop: detailUnit
+  #    - slot_was_set:
+  #      - requested_slot: detailStatus
+  #    - slot_was_set:
+  #      - requested_slot: detailUnit
+  #    - intent: explain
+  #    - action: action_unit_detail
+  #    - action: fault_form
+  #    - active_loop: null
+  # TODO
+  - story: 处理车辆故障
     steps:
-      - detail
-      - fault_form
-      - form{"name":"fault_form"}
-      - form{"name":null}
-      - utter_slots_values
+      - or:
+          - intent: request_fault_detail
+          - intent: detail
+#          - slot_was_set:
+#              - detailStatus: true
+#              - unit: true
+#              - detailPhenomenon: true
+      - action: detail_form
+      - active_loop: detail_form
+      - active_loop: utter_submit
+      - slot_was_set:
+          - requested_slot: null
+      #        - slot_was_set:
+      #          - requested_slot: unit
+      #        - action: action_query_unit_problem
+      - action: utter_slots_detail_values
+      - action: action_getReason_getSolution
+      - action: action_restart
+
+  - story: 查询车辆故障原因
+    steps:
+      - or:
+          - intent: request_fault_reason
+          - intent: reason
+      - action: reason_form
+      - active_loop: reason_form
+      - active_loop: utter_submit
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_slots_reason_values
+      - action: action_getDetail_getSolution
+      - action: action_restart
+
+  - story: 故障解决方案解决的问题有哪些
+    steps:
+      - or:
+          - intent: request_fault_solution
+          - intent: solution
+      - action: solution_form
+      - active_loop: solution_form
+      - active_loop: utter_submit
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_slots_solution_values
+      - action: action_getDetail_getReason
+      - action: action_restart
+
+

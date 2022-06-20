@@ -1,106 +1,66 @@
 version: "3.1"
-
 nlu:
 - intent: greet
   examples: |
     - hey
     - hello
     - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
     - 你好
-
+    - 嗨
 - intent: goodbye
   examples: |
     - cu
     - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
     - bye bye
-    - see you later
+    - 拜拜
     - 再见
-
 - intent: affirm
   examples: |
     - yes
     - y
-    - indeed
-    - of course
-    - that sounds good
     - correct
     - 确定
     - 同意
     - 可以
-
 - intent: deny
   examples: |
     - no
     - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
     - 拒绝
     - 我不同意
     - 退出
-
 - intent: mood_great
   examples: |
     - perfect
     - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
     - 很开心
     - 心情很好
     - 很愉快
-
 - intent: mood_unhappy
   examples: |
-    - my day was horrible
     - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
     - so sad
     - 我很难过
     - 很不开心
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
     - 你是机器人吗？
     - 你是谁
+- intent: request_fault_detail
+  examples: |
+    - 车辆突然故障了
+    - 我有个问题
+    - 我出了点状况
+    - 我需要你的帮助
+- intent: request_fault_reason
+  examples: |
+    - 一般这种原因会导致哪些后果
+    - 想咨询些汽车故障信息及解决的问题
+    - 想问些原因和后果相关的问题
+- intent: request_fault_solution
+  examples: |
+    - 我想问写对部件进行维修后能解决的问题
+    - 我的车辆的这种维修方案还能解决那些问题呢
+    - 想问你关于维修方案能处理哪些故障的问题
+

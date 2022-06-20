@@ -1,13 +1,83 @@
 version: "3.1"
 
 rules:
+  - rule: say hello
+#    conversation_start: true
+    steps:
+      - intent: greet
+      - action: utter_greet
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+#  - rule: Action form
+#    steps:
+#      - intent: request_fault_help
+#      - action: fault_form
+#      - active_loop: fault_form
+
+#  - rule: Example of an unhappy path
+#      condition:
+#        - active_loop: restaurant_form
+#        steps:
+#        - intent: chitchat
+#        - action: utter_chitchat
+#        - action: restaurant_form
+#        - active_loop: restaurant_form
+  - rule: 故障描述 表单
+    steps:
+      - or:
+          - intent: request_fault_detail
+          - intent: detail
+      - action: detail_form
+      - active_loop: detail_form
+
+  - rule: 故障原因 表单
+    steps:
+      - or:
+          - intent: request_fault_reason
+          - intent: reason
+      - action: reason_form
+      - active_loop: reason_form
+
+  - rule: 解决方案 表单
+    steps:
+      - or:
+          - intent: request_fault_solution
+          - intent: solution
+      - action: solution_form
+      - active_loop: solution_form
+
+  - rule: 故障描述 表单提交
+    condition:
+      - active_loop: detail_form
+    steps:
+      - active_loop: null
+      - action: utter_slots_detail_values
+      - action: action_getReason_getSolution
+#      - wait_for_user_input: false
+      - action: action_restart
+
+  - rule: 故障原因 表单提交
+    condition:
+      - active_loop: reason_form
+    steps:
+      - active_loop: null
+      - action: utter_slots_reason_values
+      - action: action_getDetail_getSolution
+      - action: action_restart
+
+  - rule: 解决方案 表单提交
+    condition:
+      - active_loop: solution_form
+    steps:
+      - active_loop: null
+      - action: utter_slots_solution_values
+      - action: action_getDetail_getReason
+      - action: action_restart

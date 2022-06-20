@@ -1,83 +1,146 @@
-version: "3.1"
-
-intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - detail
-  - reason
-  - solution
-
-enities:
-  - detailStatus
-  - detailUnit
-  - detailPheonomenon
-  - schemeUnit
-  - schemeAnalyse
-  - reasonUnit
-  - reasonAnalyse
-
-slots:
-  detailStatus:
-    type: unfeaturized
-    auto_fill: false
-  detailUnit:
-    type: unfeaturized
-    auto_fill: false
-  detailPheonomenon:
-    type: unfeaturized
-    auto_fill: false
-  schemeUnit:
-    type: unfeaturized
-    auto_fill: false
-  schemeAnalyse:
-    type: unfeaturized
-    auto_fill: false
-  reasonUnit:
-    type: unfeaturized
-    auto_fill: false
-  reasonAnalyse:
-    type: unfeaturized
-    auto_fill: false
-  requested_slot:
-    type: unfeaturized
-
-forms:
-  fault_form
-
-responses:
-  utter_greet:
-    - text: "Hey! How are you?"
-    - text: "你好，我是rasa机器人，请问您有什么需要帮助的吗?"
-    - text: "你好，请问有什么可以帮助您的吗?"
-    - text: "你好，我是 rasa, 一个利用知识图谱帮你解决车辆故障的机器人。"
-
-  utter_cheer_up:
-    - text: "Here is something to cheer you up:"
-      image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-    - text: "Did that help you?"
-
-  utter_happy:
-    - text: "Great, carry on!"
-
-  utter_goodbye:
-    - text: "Bye"
-
-  utter_iamabot:
-    - text: "I am a bot, powered by Rasa."
-
-  utter_slots_values:
-    - text: "我将使用以下参数运行解决方案的搜索：:\n
-            - 车辆状态: {detailStatus}\n
-            - 故障部件: {detailUnit}\n
-            - 故障现象：{detailPhenomenon}"
-
+version: '3.0'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+intents:
+- affirm
+- bot_challenge
+- deny
+- detail
+- goodbye
+- greet
+- mood_great
+- mood_unhappy
+- nlu_fallback
+- reason
+- request_fault_detail
+- request_fault_reason
+- request_fault_solution
+- solution
+entities:
+- reasonAnalyse
+- detailPhenomenon
+- unit
+- detailStatus
+- schemeOperation
+slots:
+  detailStatus:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: detailStatus
+  unit:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: unit
+  detailPhenomenon:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: detailPhenomenon
+  reasonAnalyse:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: reasonAnalyse
+  schemeOperation:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: schemeOperation
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  - text: 你好，我是Silly机器人，请问您有什么需要帮助的吗?
+  - text: 你好，请问有什么可以帮助您的吗?
+  - text: 你好，我是 Silly, 一个利用知识图谱帮你解决车辆故障的机器人。
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_default:
+  - text: Silly不太明白您的意思，您可以重新表述下吗
+  utter_ask_rephrase:
+  - text: 抱歉Silly没能明白您的话，请您重新表述一次
+  utter_please_rephrase:
+  - text: 对不起，我不太明白。您能重新表述一次吗？
+  utter_submit:
+  - text: 表单已提交
+  utter_slots_detail_values:
+  - text: |-
+      我将使用以下参数运行故障原因和解决方案的搜索：
+       - 车辆状态: {detailStatus}
+       - 故障部件: {unit}
+       - 故障现象：{detailPhenomenon}
+  utter_slots_reason_values:
+  - text: |-
+      我将使用以下参数运行故障描述和解决方案的搜索：
+       - 原因部件: {unit}
+       - 原因分析：{detailPhenomenon}
+  utter_slots_solution_values:
+  - text: |-
+      我将使用以下参数运行故障描述和故障原因的搜索：
+       - 车辆状态: {detailStatus}
+       - 故障部件: {unit}
+       - 故障现象：{detailPhenomenon}
+  utter_ask_detail_form_unit:
+  - text: 故障位置是车辆的哪个部件？
+  - text: 车辆故障的具体部件是什么
+  - text: 车哪里出现的问题
+  utter_ask_reason_form_unit:
+  - text: 车辆的哪个部件做{reasonAnalyse}操作？
+  - text: 哪个具体部件需要做{reasonAnalyse}这样的操作
+  - text: 哪个部件出现的{reasonAnalyse}问题
+  - text: 车哪里出现的{reasonAnalyse}问题
+  utter_ask_solution_form_unit:
+  - text: 车辆的哪个部件需要{schemeOperation}？
+  - text: 车的那个部位需要{schemeOperation}
+  utter_ask_detail_form_detailStatus:
+  - text: 车辆是在什么状态下出现{unit}故障的
+  - text: 车辆是在什么情况下出现{unit}的问题
+  utter_ask_detail_form_detailPhenomenon:
+  - text: 部件{unit}的故障现象是什么
+  - text: 部件{unit}出现的是什么问题？
+  utter_ask_reason_form_reasonAnalyse:
+  - text: 部件{unit}导致了什么现象
+  - text: 部件{unit}出现了什么问题
+  utter_ask_solution_form_schemeOperation:
+  - text: 部件{unit}需要做什么操作
+  - text: 怎么解决
+  - text: 解决方案是什么
+actions:
+- action_getDetail_getReason
+- action_getDetail_getSolution
+- action_getReason_getSolution
+- utter_greet
+- utter_slots_detail_values
+forms:
+  detail_form:
+    ignored_intents: []
+    required_slots:
+    - detailStatus
+    - unit
+    - detailPhenomenon
+  reason_form:
+    ignored_intents: []
+    required_slots:
+    - unit
+    - reasonAnalyse
+  solution_form:
+    ignored_intents: []
+    required_slots:
+    - unit
+    - schemeOperation

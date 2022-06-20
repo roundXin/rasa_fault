@@ -4,25 +4,107 @@ recipe: default.v1
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en
+language: zh
 
 pipeline:
-  # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
-  # # If you'd like to customize it, uncomment and adjust the pipeline.
-  # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
-  - name: LanguageModelTokenizer
+  #  - name: SpacyNLP                   # 预训练词向量
+  #    model: "zh_core_web_md"
+  #  - name: SpacyTokenizer          # 文本分词器
+  #  - name: SpacyEntityExtractor  #文本特征化
+  #  - name: SpacyFeaturizer         #特征提取器 将一句话变成一个向量
+  #    pooling: mean
+  #  - name: CountVectorsFeaturizer  #创建用户信息和标签(意图和响应)的词袋表征 为意图分类和 response selection创建特征
+  #  - name: CountVectorsFeaturizer
+  #    analyzer: "char_wb"
+  #    min_ngram: 1
+  #    max_ngram: 4
+  #  - name: DIETClassifier              #意图分类
+  #    epochs: 100
+  #  - name: EntitySynonymMapper   #同义实体
+  #  - name: ResponseSelector
+  #    epochs: 100
+  #########################################################
+  #  - name: JiebaTokenizer #需要改代码，去掉不支持中文的限制
+  ##  - name: LanguageModelFeaturizer
+  ##  - name: WhitespaceTokenizer
+  #  - name: CountVectorsFeaturizer
+  ##  - name: LexicalSyntacticFeaturizer
+  #  - name: RegexFeaturizer
+  ##  - name: CountVectorsFeaturizer
+  #    model_name: bert
+  #    model_weights: bert-base-chinese
+  #  - name: DIETClassifier
+  #    epochs: 100
+  #  - name: EntitySynonymMapper
+  #  - name: ResponseSelector
+  #    epochs: 100
+  #  - name: FallbackClassifier
+  #    threshold: 0.3
+  #    ambiguity_threshold: 0.1
+  - name: SpacyNLP
+    model: "zh_core_web_sm"
+    case_sensitive: TRUE
+    intent_tokenization_flag: True
+    intent_split_symbol: "_"
+  - name: SpacyTokenizer
+  - name: SpacyFeaturizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
-  - name: LanguageModelTokenizer
-    model_name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
   - name: DIETClassifier
     epochs: 100
   - name: EntitySynonymMapper
   - name: ResponseSelector
     epochs: 100
-  - name: FallbackClassifier
-    threshold: 0.3
-    ambiguity_threshold: 0.1
+        ##############################
+    #  - name: JiebaTokenizer
+    ##  - name: ConveRTTokenizer
+    #  - name: LanguageModelFeaturizer
+    ##  - name: WhitespaceTokenizer
+    #  - name: CountVectorsFeaturizer
+    #  - name: LanguageModelFeaturizer
+    #    model_name: bert
+    #    model_weights: bert-base-chinese
+    #  - name: RegexFeaturizer
+    #  - name: DIETClassifier
+    #    constrain_similarities: False
+    ##    evaluate_every_number_of_epochs: 20
+    #    epochs: 1000
+    #    tensorboard_log_directory: ./log
+    #    learning_rate: 0.001
+    #  - name: ResponseSelector
+    #      #  - RegexEntityExtractor
+    #      #  - name: DucklingEntityExtractor
+    #    #    dimensions: ["detail"]
+    #  - name: FallbackClassifier
+    #    threshold: 0.4
+    #    ambiguity_threshold: 0.1
+    # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
+    # # If you'd like to customize it, uncomment and adjust the pipeline.
+    # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
+##  - name: LanguageModelTokenizer
+#  - name: JiebaTokenizer
+#  - name: RegexFeaturizer
+##  - name: LexicalSyntacticFeaturizer
+#  - name: LanguageModelFeaturizer
+##  - name: BertTokenizer
+#    model_name: bert
+#    model_weight: bert-base-chinese
+##    model_name: bert
+##    model_weights: chinese-bert-wwm
+#  - name: DIETClassifier
+#    constrain_similarities: False
+#    epochs: 100
+#  - name: EntitySynonymMapper
+#  - name: ResponseSelector
+#    epochs: 100
+#  - name: FallbackClassifier
+#    threshold: 0.3
+#    ambiguity_threshold: 0.1
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
